@@ -73,6 +73,7 @@ struct Student* create_student() {
 // It should return the new head of the list
 struct Student* add_student(struct Student* student_list, struct Student* new_student) {
     // TODO: Link the new_student to the current list
+    new_student->next = student_list;
     
     return new_student; // Return new_student (because it is now the front of the list)
 }
@@ -80,13 +81,30 @@ struct Student* add_student(struct Student* student_list, struct Student* new_st
 // Task 2: Implement this function
 void print_list(struct Student* student_list) {
     // TODO: Traverse the list and print student info
-
+    struct Student* current = student_list;
+    
+    while(current != NULL) {
+        printf("ID: %d, Name: %s %s, GPA: %.2f\n",
+            current->id,
+            current->first_name,
+            current->last_name,
+            current->gpa);
+            current = current->next;
+    }
 }
 
 // Task 3: Implement this function
 void free_list(struct Student* student_list) {
     // TODO: Loop through the list and free every node
     // Careful! Don't lose the pointer to the next node before freeing current.
-    
+    struct Student* current = student_list;
+    struct Student* next_node;
+
+    while(current != NULL) {
+    next_node = current->next;
+    free(current);
+    current = next_node;
+    }
+
     printf("Memory freed.\n");
 }
